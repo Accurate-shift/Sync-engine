@@ -1,2 +1,0 @@
-# Sync-engine
-Sync Engine is a real-time multi-device synchronization system that allows multiple phones or laptops on the same network to execute events (audio, UI effects, or actions) at the exact same moment with millisecond-level alignment.  It uses Node.js + Socket.IO + LAN QR pairing to create offline-first “rooms” where devices sync their clocks, schedule events, and execute them simultaneously without relying on external cloud services.  Built for:  real-time audio sync group playback systems multiplayer local experiences experimental LAN-based interaction systems
