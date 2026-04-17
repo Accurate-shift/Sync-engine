@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Sync Engine</title>
+    <link rel="stylesheet" href="style1.css" />
+  </head>
+  <body>
+    <div class="status-bar" id="statusBar">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">Connecting…</span>
+    </div>
+    <div class="screen" id="lobbyScreen">
+      <div class="lobby-inner">
+        <div class="logo">
+          <h1>Sync Engine</h1>
+          <p class="subtitle">Offline · Hotspot · Simultaneous</p>
+        </div>
+        <div class="card">
+          <button id="createRoomBtn" class="btn btn-primary">Create Room</button>
+          <div class="divider">or join existing</div>
+          <div class="row">
+            <input id="roomCodeInput" type="text" placeholder="Room code" maxlength="5"
+                   autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" />
+            <button id="joinRoomBtn" class="btn btn-ghost">Join</button>
+          </div>
+          <p class="error" id="lobbyError"></p>
+        </div>
+        <div class="card connect-panel hidden" id="connectPanel">
+          <div class="connect-header">
+            <span class="connect-title">Connect from Android</span>
+            <span class="connect-hint">Join your hotspot, then scan</span>
+          </div>
+          <div id="qrList" class="qr-list"></div>
+          <p class="no-lan hidden" id="noLan">
+            No LAN interfaces found.<br/>Start your hotspot and
+            <button class="link-btn" id="refreshLanBtn">refresh</button>.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="screen hidden" id="roomScreen">
+      <header>
+        <div class="header-left">
+          <span class="room-label">ROOM</span>
+          <span class="room-code" id="roomCodeDisplay"></span>
+        </div>
+        <div class="header-right">
+          <button class="icon-btn" id="showConnectBtn" title="Show connection QR">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+              <path d="M14 14h3v3h-3zM17 17h3v3h-3zM14 20h3"/>
+            </svg>
+          </button>
+          <span class="client-count" id="clientCount">1 client</span>
+        </div>
+        <button class="icon-btn" id="leaveRoomBtn" title="Leave room">
+  Leave
+        </button>
+      </header>
+      <div class="qr-sheet hidden" id="qrSheet">
+        <div class="qr-sheet-header">
+          <span>Connect more devices</span>
+          <button class="link-btn" id="closeQrBtn">close</button>
+        </div>
+        <div id="qrSheetList" class="qr-list"></div>
+      </div>
+      <section class="clock-panel">
+        <div class="clock-item">
+          <span class="clock-label">Server time</span>
+          <span class="clock-value mono" id="serverTimeClock">—</span>
+        </div>
+        <div class="clock-item">
+          <span class="clock-label">Clock offset</span>
+          <span class="clock-value mono" id="clockOffset">—</span>
+        </div>
+        <div class="clock-item">
+          <span class="clock-label">Local time</span>
+          <span class="clock-value mono" id="localTimeClock">—</span>
+        </div>
+      </section>
+      <!-- SYNC CARD -->
+    <div class="sync-card" id="syncCard">
+      <div class="sync-card-inner">
+        
+        <div class="sync-card-front">
+          <h3>SYNC STATUS</h3>
+          <p>Tap / Auto flip on sync</p>
+          <div class="pulse-dot"></div>
+        </div>
+
+        <div class="sync-card-back">
+          <h3>OFFSET</h3>
+          <p id="syncOffsetDisplay">0 ms</p>
+          <small>server ↔ device</small>
+        </div>
+
+      </div>
+    </div>
+      <section class="actions">
+        <button class="btn btn-primary full" id="testEventBtn">
+          Sync Test <span class="delay-badge">+3 s</span>
+        </button>
+        <button class="btn btn-secondary full" id="audioEventBtn">
+          Play Song <span class="delay-badge">+5 s</span>
+        </button>
+        <button class="btn btn-ghost" id="syncNowBtn">Sync Now</button>
+      </section>
+      <section class="queue-section">
+        <h2>Upcoming Events</h2>
+        <div id="eventQueue" class="event-list">
+          <p class="empty-state">No scheduled events</p>
+        </div>
+      </section>
+      <section class="log-section">
+        <h2>Activity Log</h2>
+        <div id="activityLog" class="log-list"></div>
+      </section>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script1.js"></script>
+  </body>
+</html>
